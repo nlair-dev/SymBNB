@@ -1,0 +1,9 @@
+{
+    "sqltools.connections": [
+        {
+            "connectString": "mysql://root:toor@127.0.0.1:3306/symbnb",
+            "dialect": "MariaDB",
+            "name": "symbnb"
+        }
+    ]
+}
