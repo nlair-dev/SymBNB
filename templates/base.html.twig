@@ -6,7 +6,9 @@
             SymBNB - {% block title %}Welcome!
             {% endblock %}
         </title>
-        <link rel="stylesheet" href="css/bootstrap.min.css"> {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/app.css">
+        {% block stylesheets %}{% endblock %}
         </head>
         <body>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,9 +32,9 @@
                 </div>
             </nav>
             {% block body %}{% endblock %}
-            <script src="js/bootstrap.min.js"></script>
-            <script src="js/jquery.min.js"></script>
-            <script src="js/popper.min.js"></script>
+            <script src="/js/bootstrap.min.js"></script>
+            <script src="/js/jquery.min.js"></script>
+            <script src="/js/popper.min.js"></script>
             {% block javascripts %}{% endblock %}
         </body>
     </html>
