@@ -44,7 +44,7 @@ class Ad
     /**
      * @ORM\Column(type="text")
      */
-    private $content;
+    private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -61,6 +61,9 @@ class Ad
      */
     private $images;
 
+    /**
+     * Ad constructor.
+     */
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -81,16 +84,26 @@ class Ad
         }
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -98,11 +111,18 @@ class Ad
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * @param string $slug
+     * @return $this
+     */
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
@@ -110,11 +130,18 @@ class Ad
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getPrice(): ?float
     {
         return $this->price;
     }
 
+    /**
+     * @param float $price
+     * @return $this
+     */
     public function setPrice(float $price): self
     {
         $this->price = $price;
@@ -122,11 +149,18 @@ class Ad
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getIntroduction(): ?string
     {
         return $this->introduction;
     }
 
+    /**
+     * @param string $introduction
+     * @return $this
+     */
     public function setIntroduction(string $introduction): self
     {
         $this->introduction = $introduction;
@@ -134,23 +168,37 @@ class Ad
         return $this;
     }
 
-    public function getContent(): ?string
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
     {
-        return $this->content;
+        return $this->description;
     }
 
-    public function setContent(string $content): self
+    /**
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription(string $description): self
     {
-        $this->content = $content;
+        $this->description = $description;
 
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCoverImage(): ?string
     {
         return $this->coverImage;
     }
 
+    /**
+     * @param string $coverImage
+     * @return $this
+     */
     public function setCoverImage(string $coverImage): self
     {
         $this->coverImage = $coverImage;
@@ -158,11 +206,18 @@ class Ad
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getRooms(): ?int
     {
         return $this->rooms;
     }
 
+    /**
+     * @param int $rooms
+     * @return $this
+     */
     public function setRooms(int $rooms): self
     {
         $this->rooms = $rooms;
