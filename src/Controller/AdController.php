@@ -49,6 +49,15 @@ class AdController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($ad);
             $manager->flush();
+            
+            $this->addFlash(
+                'success',
+                "L'annonce <strong>{$ad->getTitle()}</strong> a bien été enregistrée !"
+            );
+
+            return $this->redirectToRoute('ads_show', [
+                'slug' => $ad->getSlug()
+            ]);
         }
 
         return $this->render('ad/new.html.twig', [
@@ -68,6 +77,4 @@ class AdController extends AbstractController
             'ad' => $ad,
         ]);
     }
-
-
 }
