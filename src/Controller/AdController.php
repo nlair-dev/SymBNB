@@ -42,6 +42,7 @@ class AdController extends AbstractController
     public function create(Request $request, ObjectManager $manager)
     {
         $ad = new Ad();
+
         $form = $this->createForm(AdType::class, $ad);
 
         $form->handleRequest($request);

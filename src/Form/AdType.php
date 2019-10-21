@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Ad;
+use App\Form\ImageType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -43,6 +45,10 @@ class AdType extends AbstractType
             ->add('description', TextType::class, $this->getConfiguration('Presentation', 'Tapez un presentation pour votre bien'))
             ->add('rooms', IntegerType::class, $this->getConfiguration('Nombre de chambre', 'Le nombre de chambre disponible'))
             ->add('price', MoneyType::class, $this->getConfiguration('Prix par nuit', 'Indiquez le prix pour une nuit'))
+            ->add('images', CollectionType::class, [
+                'entry_type' => ImageType::class,
+                'allow_add' => true
+            ])
         ;
     }
 
