@@ -27,3 +27,8 @@ div.a-title h1, div.a-title p {
     max-width: 54px;
     max-height: 54px;
 }
+
+.avatar-mini {
+    max-width: 24px;
+    max-height: 24px;
+}
