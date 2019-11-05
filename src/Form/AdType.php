@@ -23,7 +23,7 @@ class AdType extends ApplicationType
     {
         $builder
             ->add('title', TextType::class, $this->getConfiguration('Titre', 'Titre de votre annonce'))
-            ->add('slug', TextType::class, $this->getConfiguration('Slug', 'Slug de l\'annonce', ['required' => false]))
+            ->add('slug', TextType::class, $this->getConfiguration('Slug', 'Slug de l\'annonce (optionnel)', ['required' => false]))
             ->add('coverImage', UrlType::class, $this->getConfiguration('URL de l\'image principale', 'Donnez l\'adresse d\'une image'))
             ->add('introduction', TextType::class, $this->getConfiguration('Introduction', 'Donnez une introduction global de l\'annonce'))
             ->add('description', TextType::class, $this->getConfiguration('Presentation', 'Tapez un presentation pour votre bien'))
