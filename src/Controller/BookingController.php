@@ -38,7 +38,10 @@ class BookingController extends AbstractController
             $em->persist($booking);
             $em->flush();
 
-            return $this->redirectToRoute('booking_show', ['id' => $booking->getId()]);
+            return $this->redirectToRoute('booking_show', [
+                'id' => $booking->getId(),
+                'withAlert' => true,
+            ]);
         }
 
         return $this->render('booking/book.html.twig', [
