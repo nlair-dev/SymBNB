@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Booking
 {
@@ -52,6 +54,27 @@ class Booking
      * @ORM\Column(type="text", nullable=true)
      */
     private $comment;
+
+    /**
+     * @ORM\PrePersist
+     * @return void
+     */
+    public function prePersist(): void
+    {
+        if (empty($this->createdAt)) {
+            $this->createdAt = new DateTime();
+        }
+
+        if (empty($this->amount)) {
+            $this->amount = $this->ad->getPrice() * $this->getDuration();
+        }
+    }
+
+    public function getDuration(): int
+    {
+        $diff = $this->endDate->diff($this->getStartDate());
+        return $diff->days;
+    }
 
     public function getId(): ?int
     {
