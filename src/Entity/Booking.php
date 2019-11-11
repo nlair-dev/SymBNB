@@ -36,7 +36,7 @@ class Booking
     /**
      * @ORM\Column(type="datetime")
      */
-    private $enDate;
+    private $endDate;
 
     /**
      * @ORM\Column(type="datetime")
@@ -47,6 +47,11 @@ class Booking
      * @ORM\Column(type="float")
      */
     private $amount;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
 
     public function getId(): ?int
     {
@@ -89,14 +94,14 @@ class Booking
         return $this;
     }
 
-    public function getEnDate(): ?\DateTimeInterface
+    public function getEndDate(): ?\DateTimeInterface
     {
-        return $this->enDate;
+        return $this->endDate;
     }
 
-    public function setEnDate(\DateTimeInterface $enDate): self
+    public function setEndDate(\DateTimeInterface $endDate): self
     {
-        $this->enDate = $enDate;
+        $this->endDate = $endDate;
 
         return $this;
     }
@@ -121,6 +126,18 @@ class Booking
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }

@@ -102,14 +102,16 @@ class AppFixtures extends Fixture
 
                 $amount = $ad->getPrice() * $duration;
                 $booker = $users[mt_rand(0, count($users) - 1)];
+                $comment = $faker->paragraph();
 
                 $booking
                     ->setBooker($booker)
                     ->setAd($ad)
                     ->setStartDate($startDate)
-                    ->setEnDate($endDate)
+                    ->setEndDate($endDate)
                     ->setCreatedAt($createAt)
-                    ->setAmount($amount);
+                    ->setAmount($amount)
+                    ->setComment($comment);
                 
                 $manager->persist($booking);
             }
