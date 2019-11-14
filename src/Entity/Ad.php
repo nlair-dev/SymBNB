@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Image;
 use Cocur\Slugify\Slugify;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -112,6 +113,32 @@ class Ad
             $slugify = new Slugify();
             $this->slug = $slugify->slugify($this->title);
         }
+    }
+
+    /**
+     * Permet d'obtenir un tableau des jours qui ne sont pas disponibles pour cette annonce
+     *
+     * @return array
+     */
+    public function getNotAvailableDays(): array
+    {
+        $notAvailableDays = [];
+
+        foreach ($this->bookings as  $booking) {
+            $resultat = range(
+                $booking->getStartDate()->getTimestamp(),
+                $booking->getEndDate()->getTimestamp(),
+                24 * 60 * 60
+            );
+
+            $days = array_map(function($dayTimestamp) {
+                return new DateTime(date('Y-m-d', $dayTimestamp));
+            }, $resultat);
+
+            $notAvailableDays = array_merge($notAvailableDays, $days);
+        }
+        
+        return $notAvailableDays;
     }
 
     /**
