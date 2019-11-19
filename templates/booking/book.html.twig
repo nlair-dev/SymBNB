@@ -13,8 +13,8 @@
         <p>Vous êtes sur le point de réserver le bien de <strong>{{ad.author.fullName}}</strong>,
         dites nous tout, on s'occupe du reste !</p>
 
-        {{form_start(form)}}
         <div class="alert alert-light">
+        {{form_start(form)}}
             <h2>Commencez par nous dire quelles sont les dates qui vous intéressent !</h2>
             <div class="row">
                 <div class="col">
@@ -24,17 +24,18 @@
                     {{form_row(form.endDate)}}
                 </div>
             </div>
+
+            <h4>Montant du séjour : <span id="amount"></span> &euro;</h4>
+            <span id="days"></span> nuit(s) à {{ad.price}} &euro; / nuit
+
+            <h4 class="mt-3">Vous avez un commentaire</h4>
+            {{form_widget(form.comment)}}
         </div>
-        <h4>Montant du séjour : <span id="amount">...</span> &euro;</h4>
-        <span id="days">0</span> nuit(s) à {{ad.price}} &euro; / nuit
+            <h2>Vous avez terminé !</h2>
+            <p>Vacances de rêve ? Hébergement pour le boulot ? Peu importe, on est avec vous!</p>
 
-        <h2>Vous avez un commentaire</h2>
-        {{form_widget(form.comment)}}
-        <h2>Vous avez terminé !</h2>
-        <p>Vacances de rêve ? Hébergement pour le boulot ? Peu importe, on est avec vous!</p>
-
-        <button type="submit" class="btn btn-success">Je réserve</button>
-        {{form_end(form)}}
+            <button type="submit" class="btn btn-success">Je réserve</button>
+            {{form_end(form)}}
     </div>
 {% endblock %}
 
@@ -54,6 +55,23 @@
                     {% endfor %}
                 ]
             });
-        })
+            $('#booking_startDate, #booking_endDate').on('change', calculateAmount);
+        });
+
+        function calculateAmount() {
+            // On récupère les dates
+            const endDate = new Date(document.getElementById('booking_endDate').value.replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
+            const startDate = new Date(document.getElementById('booking_startDate').value.replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
+
+            if (startDate && endDate && startDate < endDate) {
+                const DAY_TIME = 24 * 60 * 60 * 1000;
+
+                const interval = endDate.getTime() - startDate.getTime();
+                const days = interval / DAY_TIME;
+                const amount = days * {{ ad.price }};
+                document.getElementById('days').innerHTML = days;
+                document.getElementById('amount').innerHTML = amount.toLocaleString('fr-FR');
+            }
+        }
     </script>
 {% endblock %}
