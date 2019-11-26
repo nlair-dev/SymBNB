@@ -35,14 +35,14 @@ class AdController extends AbstractController
     }
 
     /**
-     * Permet de créer une annonce
+     * Allow to create an Ad
      * @Route("/ads/new", name="ads_create")
      * @IsGranted("ROLE_USER")
      * @param Request $request
      * @param ObjectManager $manager
      * @return Response
      */
-    public function create(Request $request, ObjectManager $manager)
+    public function create(Request $request, ObjectManager $manager): Response
     {
         $ad = new Ad();
         $form = $this->createForm(AdType::class, $ad);
@@ -75,7 +75,7 @@ class AdController extends AbstractController
     }
 
     /**
-     * Permet d'afficher le formulaire d'édition
+     * Allow to show the edit form
      * 
      * @Route("/ads/{slug}/edit", name="ads_edit")
      * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier")
@@ -129,14 +129,14 @@ class AdController extends AbstractController
 
 
     /**
-     * Permet de supprimer une annonce
+     * Allow to delete an ad
      * @Route("/ads/{slug}/delete", name="ads_delete")
      * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()", message="Vous n'avez pas le droit d'accéder à cette ressource")
      * @param Ad $ad
      * @param ObjectManager $em
-     * @return void
+     * @return Response
      */
-    public function delete(Ad $ad, ObjectManager $em)
+    public function delete(Ad $ad, ObjectManager $em): Response
     {
         $em->remove($ad);
         $em->flush();

@@ -56,11 +56,13 @@
                     <h2 class="mb-3">Commentaires de nos voyageurs : </h2>
                     {% for comment in ad.comments %}
                         <div class="bg-light rounded mb-3 py-3 px-3">
-                            <strong>{{comment.author.fullName}}</strong> a dit :
+                            <strong>{{ comment.author.fullName }}</strong> a dit :
                             <blockquote>
-                                {{comment.content}}
+                                {{ comment.content }}
                             </blockquote>
-                            <strong>Note donnée par {{comment.author.fullName}} : </strong> {{comment.rating}}
+                            <strong>Note donnée par {{ comment.author.fullName }} : </strong>
+
+                            {% include 'partials/rating.html.twig' with {'rating': comment.rating}%}
                         </div>
                     {% endfor %}
                 {% else %}

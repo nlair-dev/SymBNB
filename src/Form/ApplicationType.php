@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 class ApplicationType extends AbstractType
 {
     /**
-     * Permet d'avoir la configuration de base d'un champ !
+     * Default configuration for an input form
      * @param string $label
      * @param string $placeholder
      * @param array $options
