@@ -122,6 +122,20 @@ class Ad
     }
 
     /**
+     * Average ratings for an ad
+     *
+     * @return int
+     */
+    public function getAvgRatings(): int
+    {
+        $sum = array_reduce($this->comments->toArray(), function($total, $comment) {
+            return $total + $comment->getRating();
+        }, 0);
+
+        return count($this->comments) > 0 ? $sum / count($this->comments) : 0;
+    }
+
+    /**
      * Permet d'obtenir un tableau des jours qui ne sont pas disponibles pour cette annonce
      *
      * @return array

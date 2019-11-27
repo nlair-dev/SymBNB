@@ -37,3 +37,7 @@ div.a-title h1, div.a-title p {
     color: firebrick !important;
     border: 2px solid firebrick !important;
 }
+
+span.rating i {
+    color: goldenrod;
+}

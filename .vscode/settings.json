@@ -1,9 +1,13 @@
 {
     "sqltools.connections": [
         {
-            "connectString": "mysql://root:toor@127.0.0.1:3306/symbnb",
-            "dialect": "MariaDB",
-            "name": "symbnb"
+            "database": "symbnb",
+            "dialect": "MySQL",
+            "name": "symbnb",
+            "password": "toor",
+            "port": 3306,
+            "server": "localhost",
+            "username": "root"
         }
     ]
 }
