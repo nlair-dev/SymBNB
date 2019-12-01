@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use App\Entity\Image;
 use Cocur\Slugify\Slugify;
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
@@ -128,7 +127,7 @@ class Ad
      */
     public function getAvgRatings(): int
     {
-        $sum = array_reduce($this->comments->toArray(), function($total, $comment) {
+        $sum = array_reduce($this->comments->toArray(), function (int $total, Comment $comment) {
             return $total + $comment->getRating();
         }, 0);
 
@@ -136,7 +135,21 @@ class Ad
     }
 
     /**
-     * Permet d'obtenir un tableau des jours qui ne sont pas disponibles pour cette annonce
+     * Allow to retrieve the author's comment with the ad
+     * @param User $author
+     * @return Comment|null
+     */
+    public function getCommentFromAuthor(User $author): ?Comment
+    {
+        foreach ($this->comments as $comment) {
+            if ($comment->getAuthor() === $author) return $comment;
+        }
+
+        return null;
+    }
+
+    /**
+     * Allow to create an array with the days that not available.
      *
      * @return array
      */
@@ -145,7 +158,7 @@ class Ad
         $notAvailableDays = [];
 
         foreach ($this->bookings as  $booking) {
-            $resultat = range(
+            $result = range(
                 $booking->getStartDate()->getTimestamp(),
                 $booking->getEndDate()->getTimestamp(),
                 24 * 60 * 60
@@ -153,7 +166,7 @@ class Ad
 
             $days = array_map(function($dayTimestamp) {
                 return new DateTime(date('Y-m-d', $dayTimestamp));
-            }, $resultat);
+            }, $result);
 
             $notAvailableDays = array_merge($notAvailableDays, $days);
         }
