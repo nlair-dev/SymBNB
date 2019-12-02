@@ -99,7 +99,7 @@ class User implements UserInterface
     }
 
     /**
-     * Permet d'initialiser le slug !
+     * Allow to initialize the slug
      * 
      * @ORM\PrePersist
      * @ORM\PreUpdate

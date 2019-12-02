@@ -13,6 +13,12 @@ div.a-title h1, div.a-title p {
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 
+div.a-title .btn {
+    margin-top: 2em;
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
+
 .carousel-caption {
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
@@ -40,4 +46,12 @@ div.a-title h1, div.a-title p {
 
 span.rating i {
     color: goldenrod;
+}
+
+.alert a {
+    text-decoration: none;
+}
+
+.alert .btn {
+    color: white;
 }

@@ -7,6 +7,8 @@ use App\Form\AccountType;
 use App\Entity\PasswordUpdate;
 use App\Form\RegistrationType;
 use App\Form\PasswordUpdateType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -21,8 +23,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AccountController extends AbstractController
 {
     /**
-     * Permet d'afficher et de gérer le formulaire de connexion
+     * connect form
      * @Route("/login", name="account_login")
+     * @param AuthenticationUtils $utils
      * @return Response
      */
     public function login(AuthenticationUtils $utils) : Response
@@ -36,7 +39,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * Permet de se deconnecter 
+     * disconnect form
      * @Route("/logout", name="account_logout")
      * @return void
      */
@@ -47,14 +50,14 @@ class AccountController extends AbstractController
 
 
     /**
-     * Permet d'afficher le formulaire d'inscription
+     * Allow to show the register form
      * @Route("/register", name="account_register")
      * @param Request $request
-     * @param ObjectManager $em
+     * @param EntityManagerInterface $manager
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
      */
-    public function register(Request $request, ObjectManager $em, UserPasswordEncoderInterface $encoder) : Response
+    public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder) : Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
@@ -63,8 +66,8 @@ class AccountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $hash = $encoder->encodePassword($user, $user->getHash());
             $user->setHash($hash);
-            $em->persist($user);
-            $em->flush();
+            $manager->persist($user);
+            $manager->flush();
 
             $this->addFlash(
                 'success',
@@ -80,21 +83,21 @@ class AccountController extends AbstractController
     }
 
     /**
-     * Permet d'afficher et de traiter le formulaire de modification de profil
+     * Allow to show the user edit form
      * @Route("/account/profile", name="account_profile")
      * @IsGranted("ROLE_USER")
      * @param Request $request
-     * @param ObjectManager $em
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function profil(Request $request, ObjectManager $em) : Response
+    public function profil(Request $request, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(AccountType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
+            $manager->flush();
             $this->addFlash('success', 'Votre compte a bien été modifié');
 
             return $this->redirectToRoute('homepage');
@@ -106,15 +109,15 @@ class AccountController extends AbstractController
     }
 
     /**
-     * Permet de modifier le mot de passe
+     * Edit user's password
      * @Route("/account/password-update", name="account_password")
      * @IsGranted("ROLE_USER")
      * @param Request $request
-     * @param ObjectManager $em
+     * @param EntityManagerInterface $manager
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
      */
-    public function updatePassword(Request $request, ObjectManager $em, UserPasswordEncoderInterface $encoder) : Response
+    public function updatePassword(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder) : Response
     {
         $passwordUpdate = new PasswordUpdate();
         $form = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
@@ -128,7 +131,7 @@ class AccountController extends AbstractController
             } else {
                 $newPassword = $encoder->encodePassword($user, $passwordUpdate->getNewPassword());
                 $user->setHash($newPassword);
-                $em->flush();
+                $manager->flush();
 
                 $this->addFlash('success', 'Votre mot de passe a bien été modifié');
                 
@@ -142,7 +145,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * Permet d'afficher le profil de l'utilisateur connecté
+     * show user's profile
      * @Route("/account", name="account_index")
      * @IsGranted("ROLE_USER")
      * @return Response
@@ -158,7 +161,7 @@ class AccountController extends AbstractController
 
 
     /**
-     * Permet d'afficher la liste des réservations faites par l'utilisateur
+     * booking list for one user
      * @Route("/account/bookings", name="account_bookings")
      */
     public function bookings()

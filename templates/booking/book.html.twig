@@ -8,14 +8,14 @@
 
 {% block body %}
     <div class="container">
-        <h1>Réserver pour l'annonce {{ad.title}}</h1>
+        <h1>Réserver pour l'annonce <em>{{ad.title}}</em></h1>
 
         <p>Vous êtes sur le point de réserver le bien de <strong>{{ad.author.fullName}}</strong>,
         dites nous tout, on s'occupe du reste !</p>
 
         <div class="alert alert-light">
         {{form_start(form)}}
-            <h2>Commencez par nous dire quelles sont les dates qui vous intéressent !</h2>
+            <h4>Commencez par nous dire quelles sont les dates qui vous intéressent !</h4>
             <div class="row">
                 <div class="col">
                     {{form_row(form.startDate)}}
@@ -25,8 +25,8 @@
                 </div>
             </div>
 
-            <h4>Montant du séjour : <span id="amount"></span> &euro;</h4>
-            <span id="days"></span> nuit(s) à {{ad.price}} &euro; / nuit
+            <h4 class="mt-2">Montant du séjour : <span id="amount"></span> &euro;</h4>
+            <span id="days"></span> nuit(s) à {{ ad.price | number_format(2, ',', ' ') }} &euro; par nuit
 
             <h4 class="mt-3">Vous avez un commentaire</h4>
             {{form_widget(form.comment)}}
@@ -59,7 +59,7 @@
         });
 
         function calculateAmount() {
-            // On récupère les dates
+            // retrieve the dates
             const endDate = new Date(document.getElementById('booking_endDate').value.replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
             const startDate = new Date(document.getElementById('booking_startDate').value.replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
 

@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,10 +41,10 @@ class AdController extends AbstractController
      * @Route("/ads/new", name="ads_create")
      * @IsGranted("ROLE_USER")
      * @param Request $request
-     * @param ObjectManager $manager
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function create(Request $request, ObjectManager $manager): Response
+    public function create(Request $request, EntityManagerInterface $manager): Response
     {
         $ad = new Ad();
         $form = $this->createForm(AdType::class, $ad);
@@ -76,15 +78,15 @@ class AdController extends AbstractController
 
     /**
      * Allow to show the edit form
-     * 
+     *
      * @Route("/ads/{slug}/edit", name="ads_edit")
      * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier")
      * @param Ad $ad
      * @param Request $request
-     * @param ObjectManager $manager
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function edit(Ad $ad, Request $request, ObjectManager $manager) : Response
+    public function edit(Ad $ad, Request $request, EntityManagerInterface $manager) : Response
     {
         $form = $this->createForm(AdType::class, $ad);
         $form->handleRequest($request);
@@ -133,10 +135,10 @@ class AdController extends AbstractController
      * @Route("/ads/{slug}/delete", name="ads_delete")
      * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()", message="Vous n'avez pas le droit d'accéder à cette ressource")
      * @param Ad $ad
-     * @param ObjectManager $em
+     * @param EntityManagerInterface $em
      * @return Response
      */
-    public function delete(Ad $ad, ObjectManager $em): Response
+    public function delete(Ad $ad, EntityManagerInterface $em): Response
     {
         $em->remove($ad);
         $em->flush();

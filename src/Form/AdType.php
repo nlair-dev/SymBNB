@@ -8,6 +8,7 @@ use App\Form\ApplicationType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +27,7 @@ class AdType extends ApplicationType
             ->add('slug', TextType::class, $this->getConfiguration('Slug', 'Slug de l\'annonce (optionnel)', ['required' => false]))
             ->add('coverImage', UrlType::class, $this->getConfiguration('URL de l\'image principale', 'Donnez l\'adresse d\'une image'))
             ->add('introduction', TextType::class, $this->getConfiguration('Introduction', 'Donnez une introduction global de l\'annonce'))
-            ->add('description', TextType::class, $this->getConfiguration('Presentation', 'Tapez un presentation pour votre bien'))
+            ->add('description', TextareaType::class, $this->getConfiguration('Presentation', 'Tapez un presentation pour votre bien'))
             ->add('rooms', IntegerType::class, $this->getConfiguration('Nombre de chambre', 'Le nombre de chambre disponible'))
             ->add('price', MoneyType::class, $this->getConfiguration('Prix par nuit', 'Indiquez le prix pour une nuit'))
             ->add('images', CollectionType::class, [

@@ -7,7 +7,10 @@ use App\Entity\Booking;
 use App\Entity\Comment;
 use App\Form\BookingType;
 use App\Form\CommentType;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +24,10 @@ class BookingController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @param Ad $ad
      * @param Request $request
-     * @param ObjectManager $em
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function book(Ad $ad, Request $request, ObjectManager $em): Response
+    public function book(Ad $ad, Request $request, EntityManagerInterface $manager): Response
     {
         $booking = new Booking();
         $form = $this->createForm(BookingType::class, $booking);
@@ -42,8 +45,8 @@ class BookingController extends AbstractController
                 $this->addFlash('warning', 'Les dates que vous avez choisi ne peuvent être réservées :  elles sont déjà prises.');
             } else {
                 // Sinon enregistrement et redirection
-                $em->persist($booking);
-                $em->flush();
+                $manager->persist($booking);
+                $manager->flush();
     
                 return $this->redirectToRoute('booking_show', [
                     'id' => $booking->getId(),
@@ -64,10 +67,10 @@ class BookingController extends AbstractController
      * @Route("/booking/{id}", name="booking_show")
      * @param Booking $booking
      * @param Request $request
-     * @param ObjectManager $manager
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function show(Booking $booking, Request $request, ObjectManager $manager)
+    public function show(Booking $booking, Request $request, EntityManagerInterface $manager)
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
