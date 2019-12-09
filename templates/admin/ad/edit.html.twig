@@ -112,8 +112,9 @@
     <div class="row align-items-center mb-3">
         <div class="col-4">
             {% if value %}
-                <img src="{{ value.url }}" class="img-fluid">
+                <img src="{{ value.url }}" class="img-fluid" alt="">
             {% endif %}
+            {{ form_row(form.url) }}
         </div>
         <div class="col-6">
             {{ form_row(form.caption) }}
@@ -128,11 +129,13 @@
 
 {% block javascripts %}
     <script>
-        $(document).ready(function() {
-            $('[data-action="delete"]').on('click', function() {
-                const target = this.dataset.target;
-                $(target).remove();
+        document.onreadystatechange = () => {
+            document.querySelectorAll('[data-action="delete"]').forEach(el => {
+                el.addEventListener('click', () => {
+                    const target = el.getAttribute("data-target");
+                    document.querySelector(target).remove();
+                });
             });
-        });
+        }
     </script>
 {% endblock %}
