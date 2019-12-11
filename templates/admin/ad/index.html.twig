@@ -16,27 +16,27 @@
                     <th class="text-center">Notes</th>
                     <th>Actions</th>
                 </tr>
+            </thead>
 
             <tbody>
-            {% for ad in ads %}
-                <tr>
-                    <td>{{ ad.id }}</td>
-                    <td>{{ ad.title }}</td>
-                    <td><img class="avatar avatar-mini mr-2" src="{{ ad.author.picture }}" alt="{{ ad.author.fullName }}">{{ ad.author.fullName }}</td>
-                    <td class="text-center">
-                        <span class="badge badge-primary rounded">{{ ad.bookings | length }}</span>
-                    </td>
-                    <td class="text-center">
-                        <span class="badge badge-primary rounded">{{ ad.avgRatings | number_format(1, ',', ' ') }}</span>
-                    </td>
-                    <td>
-                        <a href="{{ path('admin_ads_edit', { 'id': ad.id }) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                    </td>
-                </tr>
-            {% endfor %}
+                {% for ad in ads %}
+                    <tr>
+                        <td>{{ ad.id }}</td>
+                        <td>{{ ad.title }}</td>
+                        <td><img class="avatar avatar-mini mr-2" src="{{ ad.author.picture }}" alt="{{ ad.author.fullName }}">{{ ad.author.fullName }}</td>
+                        <td class="text-center">
+                            <span class="badge badge-primary rounded">{{ ad.bookings | length }}</span>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge badge-primary rounded">{{ ad.avgRatings | number_format(1, ',', ' ') }}</span>
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_ads_edit', { 'id': ad.id }) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                            <a href="{{ path('admin_ads_delete', { 'id': ad.id }) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
-            </thead>
         </table>
     </div>
 {% endblock %}
