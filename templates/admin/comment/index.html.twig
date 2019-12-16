@@ -34,8 +34,14 @@
                         </td>
                         <td>{{ comment.ad.title }}</td>
                         <td>
-                            <a href="{{ path('admin_comments_edit', {'id': comment.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                            <a href="{{ path('admin_comments_delete', {'id': comment.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='{{ path('admin_comments_edit', {'id': comment.id}) }}'">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='{{ path('admin_comments_delete', {'id': comment.id}) }}'">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
