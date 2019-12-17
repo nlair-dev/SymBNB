@@ -31,12 +31,20 @@
                             <span class="badge badge-primary rounded">{{ ad.avgRatings | number_format(1, ',', ' ') }}</span>
                         </td>
                         <td>
-                            <a href="{{ path('admin_ads_edit', { 'id': ad.id }) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                            <a href="{{ path('admin_ads_delete', { 'id': ad.id }) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='{{ path('admin_ads_edit', { 'id': ad.id }) }}'">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='{{ path('admin_ads_delete', { 'id': ad.id }) }}'">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        {% include 'admin/partials/pagination.html.twig' with {'route': 'admin_ads_index'}  %}
     </div>
 {% endblock %}

@@ -14,14 +14,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminAdController extends AbstractController
 {
     /**
-     * @Route("/admin/ads", name="admin_ads_index")
+     * @Route("/admin/ads/{page}", name="admin_ads_index", requirements={"page"="\d+"})
      * @param AdRepository $repository
+     * @param int $page
      * @return Response
      */
-    public function index(AdRepository $repository) : Response
+    public function index(AdRepository $repository, int $page = 1) : Response
     {
+        $limit = 10;
+        $start = $page * $limit - $limit;
+        $total = count($repository->findAll());
+        $pages = ceil($total / $limit);
+
         return $this->render('admin/ad/index.html.twig', [
-            'ads' => $repository->findAll(),
+            'ads' => $repository->findBy([], [], $limit, $start),
+            'pages' => $pages,
+            'page' => $page,
         ]);
     }
 

@@ -47,5 +47,7 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        {% include 'admin/partials/pagination.html.twig' with {'route' : 'admin_comments_index'} %}
     </div>
 {% endblock %}

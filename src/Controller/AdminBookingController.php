@@ -14,14 +14,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminBookingController extends AbstractController
 {
     /**
-     * @Route("/admin/bookings", name="admin_bookings_index")
+     * @Route("/admin/bookings/{page}", name="admin_bookings_index", requirements={"page"="\d+"})
      * @param BookingRepository $repository
+     * @param int $page
      * @return Response
      */
-    public function index(BookingRepository $repository) : Response
+    public function index(BookingRepository $repository, int $page = 1) : Response
     {
+        $limit = 10;
+        $start = $page * $limit - $limit;
+        $total = count($repository->findAll());
+        $pages = ceil($total / $limit);
+
         return $this->render('admin/booking/index.html.twig', [
-            'bookings' => $repository->findAll()
+            'bookings' => $repository->findBy([], [], $limit, $start),
+            'pages' => $pages,
+            'page' => $page
         ]);
     }
 
