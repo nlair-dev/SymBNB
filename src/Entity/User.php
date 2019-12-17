@@ -74,7 +74,7 @@ class User implements UserInterface
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ad", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ad", mappedBy="author", cascade={"remove"})
      */
     private $ads;
 
