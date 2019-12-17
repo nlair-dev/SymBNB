@@ -19,7 +19,7 @@
             </thead>
 
             <tbody>
-                {% for user in users %}
+                {% for user in pagination.data %}
                     <tr>
                         <td>{{ user.id }}</td>
                         <td><img src="{{ user.picture }}" alt="{{ user.fullName }}" class="avatar-medium"></td>

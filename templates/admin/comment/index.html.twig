@@ -20,7 +20,7 @@
             </thead>
 
             <tbody>
-                {% for comment in comments %}
+                {% for comment in pagination.data %}
                     <tr>
                         <td>{{ comment.id }}</td>
                         <td>{{ comment.createAt | date('d/m/Y H:i:s') }}</td>
