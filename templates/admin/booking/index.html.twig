@@ -36,7 +36,7 @@
                             <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='{{ path('admin_bookings_edit', {'id': booking.id}) }}'">
                                 <i class="fas fa-pen"></i>
                             </button>
-                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='#'">
+                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='{{ path('admin_bookings_delete', {'id': booking.id}) }}'">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>

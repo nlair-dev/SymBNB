@@ -54,4 +54,19 @@ class AdminBookingController extends AbstractController
             'booking' => $booking
         ]);
     }
+
+    /**
+     * @Route("/admin/bookings/{id}/delete", name="admin_bookings_delete")
+     * @param Booking $booking
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function delete(Booking $booking, EntityManagerInterface $manager) : Response
+    {
+        $manager->remove($booking);
+        $manager->flush();
+        $this->addFlash('success', "La réservation a bien été supprimée");
+
+        return $this->redirectToRoute('admin_bookings_index');
+    }
 }
