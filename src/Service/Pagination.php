@@ -16,17 +16,31 @@ class Pagination
     private $manager;
     private $twig;
     private $route;
+    private $templatePath;
 
-    public function __construct(EntityManagerInterface $manager, Environment $twig, RequestStack $request)
+    public function __construct(EntityManagerInterface $manager, Environment $twig, RequestStack $request, $templatePath)
     {
         $this->route = $request->getCurrentRequest()->attributes->get('_route');
         $this->manager = $manager;
         $this->twig = $twig;
+        $this->templatePath = $templatePath;
+    }
+
+    public function setTemplatePath($templatePath)
+    {
+        $this->templatePath = $templatePath;
+
+        return $this;
+    }
+
+    public function getTemplatePath()
+    {
+        return $this->templatePath;
     }
 
     public function display()
     {
-        $this->twig->display('admin/partials/pagination.html.twig', [
+        $this->twig->display($this->templatePath, [
             'page' => $this->currentPage,
             'pages' => $this->getPages(),
             'route' => $this->route,
