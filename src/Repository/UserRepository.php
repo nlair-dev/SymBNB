@@ -14,37 +14,31 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
+    /**
+     * UserRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $limit
+     * @return array
+     */
+    public function findBestUsers($limit = 2): array
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+        return $this
+            ->createQueryBuilder('u')
+            ->select('u as user, AVG(c.rating) as avgRatings, COUNT(c) as sumComments')
+            ->join('u.ads', 'a')
+            ->join('a.comments', 'c')
+            ->groupBy('u')
+            ->having('sumComments > 3')
+            ->orderBy('avgRatings', 'DESC')
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -6,6 +6,7 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 class Stats
 {
@@ -31,6 +32,24 @@ class Stats
         $comments = $this->getCommentsCount();
 
         return compact('users', 'ads', 'bookings', 'comments');
+    }
+
+    /**
+     * @param $direction
+     * @return array
+     */
+    public function getAdsStats(string $direction): array
+    {
+        return $this->manager
+            ->createQuery(
+                'SELECT AVG(c.rating) as note, a.title, a.id, u.firstName, u.lastName, u.picture
+                FROM App\Entity\Comment c 
+                JOIN c.ad a
+                JOIN a.author u
+                GROUP BY a
+                ORDER BY note ' . $direction)
+            ->setMaxResults(5)
+            ->getResult();
     }
 
     /**
@@ -75,19 +94,5 @@ class Stats
         return $this->manager
             ->createQuery('SELECT Count(c) from App\Entity\Comment c')
             ->getSingleScalarResult();
-    }
-
-    public function getAdsStats($direction): array
-    {
-        return $this->manager
-            ->createQuery(
-                'SELECT AVG(c.rating) as note, a.title, a.id, u.firstName, u.lastName, u.picture
-                FROM App\Entity\Comment c 
-                JOIN c.ad a
-                JOIN a.author u
-                GROUP BY a
-                ORDER BY note ' . $direction)
-            ->setMaxResults(5)
-            ->getResult();
     }
 }
