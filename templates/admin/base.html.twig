@@ -7,9 +7,7 @@
         SymBNB - {% block title %}Welcome!
         {% endblock %}
     </title>
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    {{ encore_entry_link_tags('app') }}
 
     {% block stylesheets %}{% endblock %}
 </head>
@@ -20,9 +18,7 @@
 {% block body %}{% endblock %}
 
 {% include "admin/partials/footer.html.twig" %}
-<script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/popper.min.js') }}"></script>
+{{ encore_entry_script_tags('app') }}
 <script src="https://kit.fontawesome.com/8c4371663b.js" crossorigin="anonymous"></script>
 {% block javascripts %}{% endblock %}
 </body>

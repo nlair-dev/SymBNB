@@ -6,8 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Connexion à l'administration</title>
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
+    {{ encore_entry_link_tags('app') }}
 
     <style>
         body {
@@ -64,5 +63,6 @@
 </div>
 
 </body>
+{{ encore_entry_script_tags('app') }}
 <script src="https://kit.fontawesome.com/8c4371663b.js" crossorigin="anonymous"></script>
 </html>

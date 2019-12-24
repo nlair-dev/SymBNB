@@ -55,6 +55,7 @@ class Stats
     /**
      * @return int
      * @throws NonUniqueResultException
+     * @throws NoResultException
      */
     private function getUsersCount(): int
     {
